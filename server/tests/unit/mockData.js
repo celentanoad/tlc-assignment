@@ -11,6 +11,17 @@ const validCases = [
     }
   },
   {
+    input: "HB 005",
+    expected: {
+      isValid: true,
+      billNumberLong: "HB00005",
+      billNumberShort: "HB 5",
+      chamber: "H",
+      type: "B",
+      suffix: "00005"
+    }
+  },
+  {
     input: "h cr 12",
     expected: {
       isValid: true,
@@ -42,6 +53,17 @@ const validCases = [
       type: "B",
       suffix: "99999"
     }
+  },
+  {
+    input: "HJR00123",
+    expected: {
+      isValid: true,
+      billNumberLong: "HJR00123",
+      billNumberShort: "HJR 123",
+      chamber: "H",
+      type: "JR",
+      suffix: "00123"
+    }
   }
 ];
 
@@ -56,7 +78,7 @@ const invalidCases = [
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Invalid Bill Number'
+      error: 'Invalid bill number'
     }
   },
   {
@@ -68,11 +90,11 @@ const invalidCases = [
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Invalid Bill Number'
+      error: 'Invalid bill number'
     }
   },
   {
-    input: "",
+    input: "BH 005",
     expected: {
       isValid: false,
       billNumberLong: null,
@@ -80,7 +102,7 @@ const invalidCases = [
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Bill number is required'
+      error: 'Invalid bill number'
     }
   }
 ];

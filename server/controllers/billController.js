@@ -15,6 +15,10 @@ const parseBill = (req, res) => {
   }
 
   const result = parseBillNumber(billNumber);
+  if (!result.isValid) {
+    // return 422 for unprocessable content
+    return res.status(422).json(result);
+  }
   return res.json(result);
 }
 

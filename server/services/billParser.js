@@ -5,8 +5,10 @@ let invalidResult = {
   chamber: null,
   type: null,
   suffix: null,
-  error: 'Invalid Bill Number'
+  error: 'Invalid bill number'
 }
+
+const validTypes = ['B', 'R', 'CR', 'JR'];
 
 const removeWhitespace = (string) => string.replace(/\s+/g, '');
 
@@ -30,6 +32,7 @@ const parseBillNumber = (raw) => {
   if (isNaN(Number(formattedRaw[2]))) {
     type += formattedRaw[2].toUpperCase();
   }
+  if (!validTypes.includes(type)) return invalidResult;
 
   const suffix = formatSuffix(formattedRaw);
   // assume that billNumberLong is chamber + type + suffix
