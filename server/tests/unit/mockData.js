@@ -55,7 +55,8 @@ const invalidCases = [
       billNumberShort: null,
       chamber: null,
       type: null,
-      suffix: null
+      suffix: null,
+      error: 'Invalid Bill Number'
     }
   },
   {
@@ -66,7 +67,8 @@ const invalidCases = [
       billNumberShort: null,
       chamber: null,
       type: null,
-      suffix: null
+      suffix: null,
+      error: 'Invalid Bill Number'
     }
   },
   {
@@ -77,7 +79,8 @@ const invalidCases = [
       billNumberShort: null,
       chamber: null,
       type: null,
-      suffix: null
+      suffix: null,
+      error: 'Bill number is required'
     }
   }
 ];

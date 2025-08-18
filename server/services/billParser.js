@@ -6,7 +6,8 @@ let invalidResult = {
   billNumberShort: null,
   chamber: null,
   type: null,
-  suffix: null
+  suffix: null,
+  error: 'Invalid Bill Number'
 }
 
 const parseBillNumber = (raw) => {
@@ -27,8 +28,9 @@ const parseBillNumber = (raw) => {
   } else {
     result.type = type+raw[2].toUpperCase()
   }
+  // Converted to Number and back to String to remove leading zeros, then add them back to ensure there are 5 digits total
   const number = Number(raw.match(/\d+/));
-  if (number) result.suffix = String(number).padStart(5, '0')
+  if (number && String(number).length <= 5) result.suffix = String(number).padStart(5, '0')
   else return invalidResult;
   result.billNumberLong = `${result.chamber}${result.type}${result.suffix}`;
   result.billNumberShort = `${result.chamber}${result.type} ${String(number)}`;
