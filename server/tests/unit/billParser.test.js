@@ -1,15 +1,19 @@
-const { parseBillNumber } = require("../../services/billParser");
+const { parseBillNumber } = require('../../services/billParser');
+const { validCases, invalidCases } = require('./mockData');
 
-describe('billParser', () => {
-  test('parses bill correctly', () => {
-    const result = parseBillNumber('HB5');
-    expect(result).toEqual({
-      isValid: true,
-      billNumberLong: 'HB00005',
-      billNumberShort: 'HB5',
-      chamber: 'H',
-      type: 'B',
-      suffix: '00005'
+describe('Bill Parser', () => {
+  describe('Valid Bill Numbers', () => {
+    validCases.forEach(({ input, expected }) => {
+      test(`parses ${input} correctly`, () => {
+        expect(parseBillNumber(input)).toEqual(expected);
+      });
+    });
+    describe('Invalid Bill Numbers', () => {
+      invalidCases.forEach(({ input, expected }) => {
+        test(`returns ${input} as invalid`, () => {
+          expect(parseBillNumber(input)).toEqual(expected);
+        });
+      });
     });
   });
 });
