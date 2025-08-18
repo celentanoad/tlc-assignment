@@ -19,7 +19,10 @@ describe('POST /api/billnumber/parse', () => {
     .post('/api/billnumber/parse')
     .send({ billNumber: 'XCR005' });
     expect(res.statusCode).toEqual(422);
-    expect(res.body.error).toEqual('Invalid bill number');
+    expect(res.body.error).toEqual({
+      code: 422,
+      message: 'Invalid bill number'
+    });
   });
 
   it('should return status 422 with "Invalid bill number" for bill numbers with invalid type', async() => {
@@ -27,24 +30,31 @@ describe('POST /api/billnumber/parse', () => {
     .post('/api/billnumber/parse')
     .send({ billNumber: 'HX005' });
     expect(res.statusCode).toEqual(422);
-    expect(res.body.error).toEqual('Invalid bill number');
+    expect(res.body.error).toEqual({
+      code: 422,
+      message: 'Invalid bill number'
+    });
   });
 
     it('should return status 422 with "Invalid bill number" for bill numbers with invalid chamber/type combination', async() => {
     const res = await request(app)
     .post('/api/billnumber/parse')
     .send({ billNumber: 'BH005' });
-    expect(res.statusCode).toEqual(422);
-    expect(res.body.error).toEqual('Invalid bill number');
+    expect(res.statusCode).toEqual(422)
+    expect(res.body.error).toEqual({
+      code: 422,
+      message: 'Invalid bill number'
+    });
   })
-
-
 
   it('should return status 400 with "Bill number is required" when the billNumber is empty', async () => {
     const res = await request(app)
     .post('/api/billnumber/parse')
     .send({ billNumber: '' });
     expect(res.statusCode).toEqual(400);
-    expect(res.body.error).toEqual('Bill number is required');
+    expect(res.body.error).toEqual({
+      code: 400,
+      message: 'Bill number is required'
+    });
   });
 });

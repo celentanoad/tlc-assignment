@@ -15,7 +15,10 @@ app.get('/error-test', (req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
-    error: 'Something went wrong'
+    error: {
+      code: 500,
+      message: 'Internal Server Error'
+    }
   });
 });
 

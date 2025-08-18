@@ -78,7 +78,10 @@ const invalidCases = [
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Invalid bill number'
+      error:  {
+        code: 422,
+        message: "Invalid bill number"
+      }
     }
   },
   {
@@ -90,7 +93,10 @@ const invalidCases = [
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Invalid bill number'
+      error:  {
+        code: 422,
+        message: "Invalid bill number"
+      }
     }
   },
   {
@@ -102,7 +108,10 @@ const invalidCases = [
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Invalid bill number'
+      error:  {
+        code: 422,
+        message: "Invalid bill number"
+      }
     }
   }
 ];

@@ -5,7 +5,10 @@ let invalidResult = {
   chamber: null,
   type: null,
   suffix: null,
-  error: 'Invalid bill number'
+  error: {
+    code: 422,
+    message: 'Invalid bill number'
+  }
 }
 
 const validTypes = ['B', 'R', 'CR', 'JR'];

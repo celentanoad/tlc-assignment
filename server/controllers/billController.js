@@ -10,7 +10,10 @@ const parseBill = (req, res) => {
       chamber: null,
       type: null,
       suffix: null,
-      error: 'Bill number is required'
+      error: {
+        code: 400,
+        message: 'Bill number is required'
+      }
     });
   }
 
