@@ -1,5 +1,3 @@
-// logic to parse/validate
-
 let invalidResult = {
   isValid: false,
   billNumberLong: null,
@@ -10,30 +8,43 @@ let invalidResult = {
   error: 'Invalid Bill Number'
 }
 
+const removeWhitespace = (string) => string.replace(/\s+/g, '');
+
+const formatSuffix = (raw) => {
+  // Converted to Number and back to String to remove leading zeros, then add them back to ensure there are 5 digits total
+  const number = String(Number(raw.match(/\d+/)));
+  return number ? number.padStart(5, '0') : ''
+}
+
 const parseBillNumber = (raw) => {
-  raw = raw.replace(/\s+/g, '')
-  if (raw.length < 3) return invalidResult;
-  let result = {
-    isValid: true
-  };
-  const chamber = raw[0].toUpperCase();
+  if (!raw || raw.length < 3) return invalidResult;
+  const formattedRaw = removeWhitespace(raw);
+
+  const chamber = formattedRaw[0].toUpperCase();
   if (chamber !== 'H' && chamber !== 'S') {
     return invalidResult;
-  } else {
-    result.chamber = chamber
   }
-  const type = raw[1].toUpperCase();
-  if (Number(raw[2])) {
-    result.type = type
-  } else {
-    result.type = type+raw[2].toUpperCase()
+
+  let type = formattedRaw[1].toUpperCase();
+  // determine if type has two characters ("CR" or "JR")
+  if (isNaN(Number(formattedRaw[2]))) {
+    type += formattedRaw[2].toUpperCase();
   }
-  // Converted to Number and back to String to remove leading zeros, then add them back to ensure there are 5 digits total
-  const number = Number(raw.match(/\d+/));
-  if (number && String(number).length <= 5) result.suffix = String(number).padStart(5, '0')
-  else return invalidResult;
-  result.billNumberLong = `${result.chamber}${result.type}${result.suffix}`;
-  result.billNumberShort = `${result.chamber}${result.type} ${String(number)}`;
+
+  const suffix = formatSuffix(formattedRaw);
+  // assume that billNumberLong is chamber + type + suffix
+  // assume that billNumberShort is chamber + type + ' ' + non-padded number
+  const nonPaddedNumber = String(Number(suffix));
+
+  const result = {
+    isValid: true,
+    billNumberLong: `${chamber}${type}${suffix}`,
+    billNumberShort: `${chamber}${type} ${nonPaddedNumber}`,
+    chamber,
+    type,
+    suffix
+  };
+
   return result;
 }
 
