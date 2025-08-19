@@ -52,7 +52,7 @@ This project implements a RESTful API to parse and validate bill numbers. The AP
       "suffix": null,
       "error": {
         "code": 422,
-        "message": "Invalid bill number format."
+        "message": "Invalid bill number"
       }
     }
     ```
@@ -82,7 +82,7 @@ This project implements a RESTful API to parse and validate bill numbers. The AP
 
 2. **Service (`billParser.js`)**
    - Focuses solely on parsing the bill number without handling empty input.
-   - Performs operations such as removing whitespace, standardizing the chamber, computing the bill type, and formatting the numeric suffix.
+   - Performs operations such as removing whitespace, validating the chamber and bill type, and formatting the numeric suffix.
 
 3. **Global Error Handling**
    - A global error handler in `index.js` catches any unexpected errors and returns a 500 error with a standard message.
@@ -96,18 +96,23 @@ This project implements a RESTful API to parse and validate bill numbers. The AP
    ```
 2. Start the server:
    ```bash
-   node server/index.js
+   npm start
    ```
-   The server listens on port 3001 (or your configured port).
+   The server listens on port 3001.
 
 ### Testing the API
-You can test the API using command-line tools (like `curl`) or integration testing with Supertest.
+You can test the API using command-line tools (like `curl` or `HTTPie`) or integration testing with Supertest.
 
 #### Example: Using curl
 ```bash
 curl -X POST http://localhost:3001/api/billnumber/parse \
 -H "Content-Type: application/json" \
 -d '{ "billNumber": "HB5" }'
+```
+
+#### Example: Using HTTPie
+```bash
+http POST http://localhost:3001/api/billnumber/parse billNumber='HB5'
 ```
 
 ### Running Tests
