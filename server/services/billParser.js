@@ -18,7 +18,8 @@ const removeWhitespace = (string) => string.replace(/\s+/g, '');
 const formatSuffix = (raw) => {
   // Converted to Number and back to String to remove leading zeros, then add them back to ensure there are 5 digits total
   const number = String(Number(raw.match(/\d+/)));
-  return number ? number.padStart(5, '0') : ''
+  // assumes a bill suffix of 00000 is invalid
+  return number !== '0' ? number.padStart(5, '0') : '';
 }
 
 const parseBillNumber = (raw) => {
@@ -38,6 +39,7 @@ const parseBillNumber = (raw) => {
   if (!validTypes.includes(type)) return invalidResult;
 
   const suffix = formatSuffix(formattedRaw);
+  if (!suffix) return invalidResult;
   // assume that billNumberLong is chamber + type + suffix
   // assume that billNumberShort is chamber + type + ' ' + non-padded number
   const nonPaddedNumber = String(Number(suffix));
